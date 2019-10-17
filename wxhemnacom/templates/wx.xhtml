@@ -1,0 +1,61 @@
+<html py:extends="main.xhtml" py:strip="True">
+  <head py:block="head_js_links" py:strip="True">
+  <script src="${tg.url('http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js')}"></script>
+  <script src="${tg.url('http://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js')}"></script>
+  <script src="${tg.url('http://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.1/highcharts.js')}"></script>
+  <script src="${tg.url('http://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.1/highcharts-more.js')}"></script>
+
+  <script src="${tg.url('/javascript/hc.js')}"></script>
+  <script src="${tg.url('/javascript/chartsjs-update.js')}"></script>
+  <script src="${tg.url('/javascript/main.js')}"></script>
+  <script src="${tg.url('/javascript/ticker.js')}"></script>
+  <script src="${tg.url('/javascript/banner.js')}"></script>
+
+  <script src="${tg.url('http://d3js.org/d3.v5.min.js')}"></script>
+  <script src="${tg.url('/javascript/daily-weather-graph.min.js')}"></script>
+  </head>
+
+  <head py:block="head" py:strip="True">
+    <title py:block="main_title">Hemna's WX Station</title>
+  </head>
+
+  <head py:block="head_onload" py:strip="True">
+  <script type="text/javascript">
+      $(window).load( start_hc );
+  </script>
+  </head>
+
+<body py:block="main_block" py:strip="True">
+  <div id="body" style="width:100px;margin-left:auto;margin-right: auto;">
+    <table width="100%">
+    <tr>
+      <td id="leftblock">
+
+        <div>
+            <div style="width:320px;">
+                Current conditions
+            </div>
+            <br />
+            <div id="idWindContainer" style="position:relative;height:200px;-moz-border-radius:5px;-webkit-border-radius:5px;border:1px solid blue;padding:5px;">
+                <div id="idWindDirGaugediv" style="float:left;padding-top:0px;padding-bottom:5px;height:200px;width:150px;">
+                    WIND GAUGE HERE
+                </div>
+
+            </div>
+        </div>
+
+
+      </td>
+
+
+      <td id="rightblock">
+          RIGHT BLOCK
+      </td>
+
+
+    </tr>
+    </table>
+  </div>
+
+</body>
+</html>

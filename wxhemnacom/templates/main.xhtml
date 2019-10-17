@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta charset="${response.charset}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/main.css')}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/menu.css')}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/fonts.css')}" />
+  <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/daily-weather-graph.css')}" />
+  <py:block name="head_js_links"></py:block>
+
+  <title py:block="main_title">Your generic title goes here</title>
+  <py:block name="head"></py:block>
+  <py:block name="head_onload"></py:block>
+</head>
+
+<body id="body">
+
+    <!-- HEADER BLOCK BEGIN //-->
+    <table width="1024" border="0" cellspacing="0" cellpadding="0" align="center">
+      <tr>
+        <td id="headtopleft">Appomattox, VA  Weather</td>
+        <td id="headtopcenter">&nbsp;</td>
+        <td id="headtopright">
+            <img src="${tg.url('/css/prototip_loader.gif')}" border="0" alt="" />
+        </td>
+      </tr>
+      <tr>
+        <td id="pageheader" colspan="3">
+          <div id="idPageHeadText">Hemna's Weather Station</div>
+          <div id="idPageSubHeadText">Appomattox, VA</div>
+          <div id="idMetarContainer"><div id="idMetar">&nbsp;</div></div>
+        </td>
+      </tr>
+      <tr>
+        <td id="idMenu" colspan="3">
+          <div id="idMenuItems"><ul><li><a href="/">Home</a></li><li><a href="/?target=wx-date">Old Data</a></li><li><a href="/?target=dl">Raw Data</a></li><li><a href="http://wx.sierraglider.com/wx">Cool, CA Weather Station</a></li></ul></div>
+        </td>
+      </tr>
+    </table>
+    <!-- HEADER BLOCK END //-->
+
+
+    <!-- MAIN CONTENT BLOCK //-->
+    <py:block name="main_block"></py:block>
+    <!-- MAIN CONTENT BLOCK END //-->
+
+
+    <!-- FOOTER BLOCK //-->
+    <py:block name="footer_block"></py:block>
+    <!-- FOOTER BLOCK END //-->
+
+</body>
+</html>

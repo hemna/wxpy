@@ -1,0 +1,4 @@
+recursive-include wxhemnacom/public *
+include wxhemnacom/public/favicon.ico
+recursive-include wxhemnacom/i18n *
+recursive-include wxhemnacom/templates *
