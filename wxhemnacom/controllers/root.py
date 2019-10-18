@@ -46,7 +46,7 @@ class RootController(BaseController):
 
     @expose('wxhemnacom.templates.wx')
     def wx(self):
-        return dict(page='wx')
+        return dict(page='wx', is_ass="True")
 
     @expose('wxhemnacom.templates.index')
     def index(self):

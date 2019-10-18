@@ -82,7 +82,7 @@ function update_webcam_img() {
 }
 
 function start_updates() {
-		
+
 	set_orig_time(new Date());
     setInterval(update_cctime, 2000);
     setInterval(update_imgs, 65000);

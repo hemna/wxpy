@@ -1,0 +1,33 @@
+<div id="idDailyWXGraph">
+<script type="text/javascript">
+  var data = [{date: "2019-09-27", highTemperature:90.7, lowTemperature: 61.9, rainfall: 0.06, highWindGust: 6.90, highWindGustBearing: 0.00},
+  {date: "2019-09-28", highTemperature:95.4, lowTemperature: 68.5, rainfall: 0.00, highWindGust: 6.90, highWindGustBearing: 158.00},
+  {date: "2019-09-29", highTemperature:95.7, lowTemperature: 0.0, rainfall: 0.00, highWindGust: 6.90, highWindGustBearing: 0.00},
+  {date: "2019-09-30", highTemperature:83.7, lowTemperature: 68.9, rainfall: 0.87, highWindGust: 6.00, highWindGustBearing: 0.00},
+  {date: "2019-10-01", highTemperature:97.0, lowTemperature: 0.0, rainfall: 0.03, highWindGust: 5.40, highWindGustBearing: 135.00},
+  {date: "2019-10-02", highTemperature:99.0, lowTemperature: 0.0, rainfall: 0.00, highWindGust: 9.80, highWindGustBearing: 180.00},
+  {date: "2019-10-03", highTemperature:101.1, lowTemperature: 0.0, rainfall: 0.00, highWindGust: 8.30, highWindGustBearing: 225.00},
+  {date: "2019-10-04", highTemperature:89.1, lowTemperature: 63.3, rainfall: 0.00, highWindGust: 9.80, highWindGustBearing: 315.00},
+  {date: "2019-10-05", highTemperature:64.2, lowTemperature: 47.7, rainfall: 0.00, highWindGust: 9.20, highWindGustBearing: 270.00},
+  {date: "2019-10-06", highTemperature:72.5, lowTemperature: 55.9, rainfall: 0.00, highWindGust: 4.50, highWindGustBearing: 180.00},
+  {date: "2019-10-07", highTemperature:87.1, lowTemperature: 60.6, rainfall: 0.00, highWindGust: 6.00, highWindGustBearing: 45.00},
+  {date: "2019-10-08", highTemperature:69.3, lowTemperature: 57.7, rainfall: 0.00, highWindGust: 10.70, highWindGustBearing: 315.00},
+  {date: "2019-10-09", highTemperature:79.0, lowTemperature: 53.6, rainfall: 0.00, highWindGust: 9.80, highWindGustBearing: 315.00},
+  {date: "2019-10-10", highTemperature:79.5, lowTemperature: 46.8, rainfall: 0.00, highWindGust: 7.60, highWindGustBearing: 292.00},
+  {date: "2019-10-11", highTemperature:84.9, lowTemperature: 47.3, rainfall: 0.00, highWindGust: 7.60, highWindGustBearing: 180.00},
+  {date: "2019-10-12", highTemperature:83.5, lowTemperature: 47.5, rainfall: 0.00, highWindGust: 4.50, highWindGustBearing: 180.00},
+  {date: "2019-10-13", highTemperature:68.2, lowTemperature: 53.6, rainfall: 0.00, highWindGust: 7.60, highWindGustBearing: 0.00},
+  {date: "2019-10-14", highTemperature:78.6, lowTemperature: 0.0, rainfall: 0.00, highWindGust: 5.40, highWindGustBearing: 180.00},
+  {date: "2019-10-15", highTemperature:80.6, lowTemperature: 0.0, rainfall: 0.00, highWindGust: 5.40, highWindGustBearing: 0.00},
+  {date: "2019-10-16", highTemperature:66.0, lowTemperature: 50.4, rainfall: 0.00, highWindGust: 13.60, highWindGustBearing: 158.00}
+  ];
+  
+  var graph = new DailyWeatherGraph({data: data,
+      container: document.getElementById('idDailyWXGraph'),
+      width: 510,
+      height: 440,
+      temperatureUnit: 'F',
+      rainfallUnit: 'inches',
+      windUnit: 'mph'});
+</script>
+</div>

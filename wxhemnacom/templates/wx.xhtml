@@ -13,6 +13,7 @@
 
   <script src="${tg.url('http://d3js.org/d3.v5.min.js')}"></script>
   <script src="${tg.url('/javascript/daily-weather-graph.min.js')}"></script>
+
   </head>
 
   <head py:block="head" py:strip="True">
@@ -21,41 +22,63 @@
 
   <head py:block="head_onload" py:strip="True">
   <script type="text/javascript">
-      $(window).load( start_hc );
+      $(document).ready(function() {
+          $.getScript("/javascript/graph_defs.js");
+          main_init;
+          start_hc;
+          start_updates;
+          start_ticker;
+          start_banner;
+      });
   </script>
   </head>
 
 <body py:block="main_block" py:strip="True">
-  <div id="body" style="width:100px;margin-left:auto;margin-right: auto;">
-    <table width="100%">
+  <table width="100%">
     <tr>
-      <td id="leftblock">
-
+      <!-- LEFT BLOCK //-->
+      <td class="leftblock">
         <div>
             <div style="width:320px;">
                 <py:include href="current_conditions.xhtml" />
             </div>
             <br />
-            <div id="idWindContainer" style="position:relative;height:200px;-moz-border-radius:5px;-webkit-border-radius:5px;border:1px solid blue;padding:5px;">
-                <div id="idWindDirGaugediv" style="float:left;padding-top:0px;padding-bottom:5px;height:200px;width:150px;">
-                    WIND GAUGE HERE
-                </div>
-
-            </div>
+            <py:include href="wind_gauges.xhtml" />
+            <py:include href="cam_timelapse.xhtml" />
+            <py:include href="earth_gif.xhtml" />
         </div>
-
-
       </td>
+      <!-- LEFT BLOCK END//-->
 
 
+      <!-- RIGHT BLOCK END//-->
       <td id="rightblock">
-          RIGHT BLOCK
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                  <td style="vertical-align:top;width:510px">
+                      <div id="idMainContent">
+                          <py:include href="daily_wx_graph.xhtml" />
+                          <py:include href="wx_tempdewpoint_graph.xhtml" />
+                          <py:include href="wx_humidity_graph.xhtml" />
+                          <py:include href="wx_pressure_graph.xhtml" />
+                          <py:include href="wx_windspeed_graph.xhtml" />
+                          <py:include href="wx_rainline_graph.xhtml" />
+                          <py:include href="wx_insidetemp_graph.xhtml" />
+                      </div>
+                  </td>
+                  <td style="vertical-align:top;padding-left:8px;">
+                      <py:include href="webcam.xhtml" />
+                      <py:include href="wx_satellite.xhtml" />
+                      <py:include href="wx_va_radar.xhtml" />
+                      <py:include href="wx_ca_radar.xhtml" />
+                  </td>
+              </tr>
+          </table>
       </td>
-
+      <!-- RIGHT BLOCK END//-->
 
     </tr>
-    </table>
-  </div>
+  </table>
 
 </body>
 </html>
