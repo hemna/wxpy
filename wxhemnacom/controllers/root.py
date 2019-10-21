@@ -61,31 +61,56 @@ class RootController(BaseController):
     @expose('wxhemnacom.templates.wx')
     @expose('json')
     def wx(self):
-        ass = DBSession.query(Weather).order_by(Weather.datetime.desc()).first()
-        return dict(page='wx', data=ass)
+        data = self._cc_data()
+        return dict(page='wx', data=data)
 
     def _dateymd(self):
         return datetime.today().strftime('%Y-%m-%d')
 
-    @expose('json')
-    def wxcc(self):
+    def _cc_data(self):
         # get latest conditions
+        date_ymd = self._dateymd()
+        date_ymd = "2019-10-20%"
         cc = DBSession.query(Weather).order_by(Weather.datetime.desc()).first()
-        print(cc._asdict())
+        data = cc._asdict()
         # get Low and High temp for the day
         # Select min(temp_out) as low, max(temp_out) as high from weather where datetime like :date
-        date_ymd = self._dateymd()
-        print(date_ymd)
-        date_ymd = "2019-10-18%"
         lowhigh = DBSession.query(
             func.min(Weather.temp_out).label('low'),
             func.max(Weather.temp_out).label('high'),
                                   ).filter(Weather.datetime.like(date_ymd)).first()
-        print(lowhigh)
-        data = { 'cc': cc._asdict(),
-                 'lw': lowhigh }
+        data.update(lowhigh._asdict())
 
+        # Get the rain_total for the year
+        year = datetime.today().strftime('%Y')
+        current_year = "{}%".format(year)
+        # Get the rain total at the start of the current year
+        raintotal_start = DBSession.query(
+            Weather.rain_total).filter(
+                Weather.datetime.like(current_year)).order_by(
+                    Weather.datetime.asc()).first()
+
+        year_start_rain = raintotal_start[0]
+        print(year_start_rain)
+        print(raintotal_start._asdict())
+        ytd_rain = data['rain_total'] - year_start_rain
+        return data
+
+    @expose('wxhemnacom.templates.wx_current_conditions')
+    @expose('json')
+    def wxcc(self):
+        data = self._cc_data()
         return dict(page='wxcc', data=data)
+
+    @expose('wxhemnacom.templates.wx_webcam')
+    def wxcam(self):
+        data = dict()
+        return dict(page='wxcam', data=data)
+
+    @expose('wxhemnacom.templates.wx_camtimelapse')
+    def wxtimelapse(self):
+        data = dict()
+        return dict(page='wxtimelapse', data=data)
 
     @expose('wxhemnacom.templates.index')
     def index(self):

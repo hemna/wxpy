@@ -6,6 +6,7 @@ function main_init() {
     $("#idMetar").bind("mouseover", metar_show);
     $("#idMetar").bind("mouseout", metar_hide);
     metar_show();
+    console.log("main_init");
 }
 
 function metar_show() {
@@ -82,6 +83,7 @@ function update_webcam_img() {
 }
 
 function start_updates() {
+    console.log('start_updates');
 
 	set_orig_time(new Date());
     setInterval(update_cctime, 2000);
@@ -90,7 +92,7 @@ function start_updates() {
 
     (function updatecc() {
         $.ajax({
-            url: '/?ajax=1&ajaxid=idCurrentConditions&target=current-conditions&junk='+get_junk(),
+            url: '/wxcc?junk='+get_junk(),
             success: function(data) {
                 $('#idCurrentConditions').fadeOut(200, 
                     function() {
@@ -110,7 +112,7 @@ function start_updates() {
 
     (function updatewebcam() {
         $.ajax({
-            url: '/?ajax=1&ajaxid=idWebCam&target=web-cam&junk='+get_junk(),
+            url: '/wxcam?junk='+get_junk(),
             success: function(data) {
                 $('#idWebCam').fadeOut(400,
                     function() {
@@ -127,7 +129,7 @@ function start_updates() {
 
     (function updatetimelapse() {
         $.ajax({
-            url: '/?ajax=1&ajaxid=idTimeLapse&target=time-lapse&junk='+get_junk(),
+            url: '/wxtimelapse?junk='+get_junk(),
             success: function(data) {
                 $('#idTimeLapse').fadeOut(400,
                     function() {

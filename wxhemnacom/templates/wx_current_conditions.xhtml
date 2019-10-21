@@ -1,4 +1,3 @@
-<div id="idCurrentConditions">
 <div id="idCurrentConditionscontents">
     <div class="cctitle">
       Current Conditions  -- Updated : 
@@ -10,16 +9,16 @@
         <td width="120">Outside :</td>
         <td>
           <div style="text-align:center; padding-top:2px;height:75px; background-color:#ffffcc;">
-            <span id="idTempF" style="font-weight:bold;">N/A</span>
+              <span id="idTempF" style="font-weight:bold;">${data['temp_out']}</span>
              F / 
-            <span id="idTempC" style="font-weight:bold;">-17.8</span>
+             <span id="idTempC" style="font-weight:bold;">${data['temp_out']}</span>
              C / 
             <span id="idTempK" style="font-weight:bold;">255.35</span>
              K
             <br/>
             N/A
             <div style="padding-top:5px;">Feels like N/A F</div>
-            <div style="padding-top:5px;">0 F / 0 F   Low/High</div>
+            <div style="padding-top:5px;">${data['low']} F / ${data['high']} F   Low/High</div>
           </div>
         </td>
       </tr>
@@ -58,5 +57,4 @@
         <td>0 F / -17.8C / 255.35 K</td>
       </tr>
     </table>
-</div>
 </div>
