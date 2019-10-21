@@ -11,12 +11,26 @@ from wxhemnacom.controllers.secure import SecureController
 from wxhemnacom.model import DBSession
 from tgext.admin.tgadminconfig import BootstrapTGAdminConfig as TGAdminConfig
 from tgext.admin.controller import AdminController
+from tgext.crud import EasyCrudRestController
+from sqlalchemy.sql import func
+from datetime import datetime
 
 from wxhemnacom.lib.base import BaseController
 from wxhemnacom.controllers.error import ErrorController
+from wxhemnacom.model.weather import Weather, WeatherDailyAgg
 
 __all__ = ['RootController']
 
+class APIController(EasyCrudRestController):
+    pagination = False
+    json_dictify = True
+    model = Weather
+
+    def _before(self, *args, **kw):
+        if request.response_type != 'application/json':
+            abort(406, 'Only JSON requests are supported')
+
+        super(APIController, self)._before(*args, **kw)
 
 class RootController(BaseController):
     """
@@ -45,13 +59,39 @@ class RootController(BaseController):
         return dict(person=person)
 
     @expose('wxhemnacom.templates.wx')
+    @expose('json')
     def wx(self):
-        return dict(page='wx', is_ass="True")
+        ass = DBSession.query(Weather).order_by(Weather.datetime.desc()).first()
+        return dict(page='wx', data=ass)
+
+    def _dateymd(self):
+        return datetime.today().strftime('%Y-%m-%d')
+
+    @expose('json')
+    def wxcc(self):
+        # get latest conditions
+        cc = DBSession.query(Weather).order_by(Weather.datetime.desc()).first()
+        print(cc._asdict())
+        # get Low and High temp for the day
+        # Select min(temp_out) as low, max(temp_out) as high from weather where datetime like :date
+        date_ymd = self._dateymd()
+        print(date_ymd)
+        date_ymd = "2019-10-18%"
+        lowhigh = DBSession.query(
+            func.min(Weather.temp_out).label('low'),
+            func.max(Weather.temp_out).label('high'),
+                                  ).filter(Weather.datetime.like(date_ymd)).first()
+        print(lowhigh)
+        data = { 'cc': cc._asdict(),
+                 'lw': lowhigh }
+
+        return dict(page='wxcc', data=data)
 
     @expose('wxhemnacom.templates.index')
     def index(self):
         """Handle the front-page."""
         return dict(page='index')
+
     @expose('wxhemnacom.templates.about')
     def about(self):
         """Handle the 'about' page."""
@@ -70,6 +110,7 @@ class RootController(BaseController):
         for a data page and a display page.
         """
         return dict(page='data', params=kw)
+
     @expose('wxhemnacom.templates.index')
     @require(predicates.has_permission('manage', msg=l_('Only for managers')))
     def manage_permission_only(self, **kw):

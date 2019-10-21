@@ -10,7 +10,15 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from wxhemnacom.model import DeclarativeBase, metadata, DBSession
 
-class Weather(DeclarativeBase):
+from sqlalchemy.ext.declarative import as_declarative
+
+@as_declarative()
+class Base:
+    def _asdict(self):
+        return {c.key: getattr(self, c.key)
+                for c in inspect(self).mapper.column_attrs}
+
+class Weather(Base):
     __tablename__ = 'weather'
 
     datetime = Column(DateTime, primary_key=True, unique=True,

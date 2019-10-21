@@ -2,15 +2,15 @@
 """The application's model objects"""
 
 from tg.util import Bunch
-from zope.sqlalchemy import ZopeTransactionEvents
+from zope.sqlalchemy import register
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 # Global session manager: DBSession() returns the Thread-local
 # session object appropriate for the current web request.
-maker = sessionmaker(autoflush=True, autocommit=False,
-                     extension=ZopeTransactionEvents())
+maker = sessionmaker(autoflush=True, autocommit=False)
 DBSession = scoped_session(maker)
+register(DBSession)
 
 # Base class for all of our model classes: By default, the data model is
 # defined with SQLAlchemy's declarative extension, but if you need more
@@ -62,4 +62,4 @@ def init_model(engine):
 from wxhemnacom.model.auth import User, Group, Permission
 from wxhemnacom.model.weather import Weather, WeatherDailyAgg
 
-__all__ = ('User', 'Group', 'Permission')
+__all__ = ('User', 'Group', 'Permission', 'Weather', 'WeatherDailyAgg')

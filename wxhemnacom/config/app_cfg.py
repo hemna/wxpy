@@ -61,7 +61,7 @@ base_config.update_blueprint({
 # Configure the base SQLALchemy Setup
 base_config.update_blueprint({
     'use_sqlalchemy': True,
-    'sqlalchemy.url': '',
+    'sqlalchemy.url': 'mysql+pymysql://root:ass@localhost:3306/open2300',
     'model': wxhemnacom.model,
     'DBSession': wxhemnacom.model.DBSession,
 })
