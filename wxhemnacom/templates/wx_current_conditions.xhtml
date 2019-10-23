@@ -11,29 +11,29 @@
           <div style="text-align:center; padding-top:2px;height:75px; background-color:#ffffcc;">
               <span id="idTempF" style="font-weight:bold;">${data['temp_out']}</span>
              F / 
-             <span id="idTempC" style="font-weight:bold;">${data['temp_out']}</span>
+             <span id="idTempC" style="font-weight:bold;">${data['temp_outC']}</span>
              C / 
-            <span id="idTempK" style="font-weight:bold;">255.35</span>
+             <span id="idTempK" style="font-weight:bold;">${data['temp_outK']}</span>
              K
             <br/>
             N/A
-            <div style="padding-top:5px;">Feels like N/A F</div>
+            <div style="padding-top:5px;">Feels like ${data['wind_chill']} F</div>
             <div style="padding-top:5px;">${data['low']} F / ${data['high']} F   Low/High</div>
           </div>
         </td>
       </tr>
       <tr>
         <td>Relative Humidity : </td>
-        <td>N/A %</td>
+        <td>${data['rel_hum_out']} %</td>
       </tr>
       <tr>
         <td>Wind : </td>
         <td>
-          <span>From the N/A 0mph@0</span>
+            <span>From the ${data['wind_direction']} ${data['wind_speed']}mph@${data['wind_angle']}</span>
           <div id="idWindArrowDiv" style="position:relative;overflow:hidden;top:1px;left:1px;width:14px;height:14px;">
             <img id="idWindArrow" style="overflow: hidden; left: -0px; position: relative;" src="/images/360arrows_blue.gif" />
           </div>
-          <span>Peak winds  mph@&nbsp;</span>
+          <span>Peak winds  ${data['peak_wind_speed']}mph@${data['peak_wind_angle']}&nbsp;${data['peak_wind_time']}</span>
         </td>
       </tr>
       <tr>

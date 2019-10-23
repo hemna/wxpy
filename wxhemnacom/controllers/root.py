@@ -6,16 +6,17 @@ from tg import request, redirect, tmpl_context
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.exceptions import HTTPFound
 from tg import predicates
-from wxhemnacom import model
-from wxhemnacom.controllers.secure import SecureController
-from wxhemnacom.model import DBSession
 from tgext.admin.tgadminconfig import BootstrapTGAdminConfig as TGAdminConfig
 from tgext.admin.controller import AdminController
 from tgext.crud import EasyCrudRestController
 from sqlalchemy.sql import func
 from datetime import datetime
 
+from wxhemnacom import model
+from wxhemnacom.controllers.secure import SecureController
+from wxhemnacom.model import DBSession
 from wxhemnacom.lib.base import BaseController
+from wxhemnacom.lib import wxconversion
 from wxhemnacom.controllers.error import ErrorController
 from wxhemnacom.model.weather import Weather, WeatherDailyAgg
 
@@ -80,6 +81,21 @@ class RootController(BaseController):
             func.max(Weather.temp_out).label('high'),
                                   ).filter(Weather.datetime.like(date_ymd)).first()
         data.update(lowhigh._asdict())
+        data['temp_outC'] = wxconversion.WXConversion.f_to_c(float(data['temp_out']))
+        data['temp_outK'] = wxconversion.WXConversion.c_to_k(float(data['temp_outC']))
+
+        # Get peak wind information for the day
+        peak_wind_sub = DBSession.query(
+            func.max(Weather.wind_speed)).filter(
+                Weather.datetime.like(date_ymd).subquery()
+
+        peak_wind_query = DBSession.query(
+            Weather.datetime,
+            Weather.wind_speed,
+            Weather.wind_angle,
+            Weather.wind_direction
+        ).filter(
+            Weather.wind_speedfirst()
 
         # Get the rain_total for the year
         year = datetime.today().strftime('%Y')
@@ -91,15 +107,36 @@ class RootController(BaseController):
                     Weather.datetime.asc()).first()
 
         year_start_rain = raintotal_start[0]
-        print(year_start_rain)
-        print(raintotal_start._asdict())
         ytd_rain = data['rain_total'] - year_start_rain
         return data
+
+    @expose('json')
+    def wx_winddir(self):
+        data = self._cc_data()
+
+        wind_direction = int(data['wind_angle']) + 180
+        wind_data = {"name": "Wind Direction",
+                     "color": "#0000ff",
+                     "data": [wind_direction]}
+        return dict(page='wx_winddir', data=wind_data)
+
+    @expose('json')
+    def wx_windspeed(self):
+        data = self._cc_data()
+
+        wind_speed = {"name": "Wind Speed",
+                      "color": "#0000ff",
+                      "data": [data['wind_speed']],
+                      "tooltop": {"valueSuffix": "mph"}}
+        return dict(data=[wind_speed])
 
     @expose('wxhemnacom.templates.wx_current_conditions')
     @expose('json')
     def wxcc(self):
         data = self._cc_data()
+
+
+        print(data)
         return dict(page='wxcc', data=data)
 
     @expose('wxhemnacom.templates.wx_webcam')

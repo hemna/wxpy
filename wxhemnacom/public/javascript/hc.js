@@ -2,7 +2,7 @@ function start_hc() {
 
     (function winddirworker() {
         $.ajax({
-            url: "/?target=wind-direction-high-charts-gauge&dataOnly=1",
+            url: "/wx_winddir.json",
             type: 'post',
             dataType: 'json',
             success: function(data) {
@@ -16,11 +16,12 @@ function start_hc() {
     })();
     (function windspeedworker() {
         $.ajax({
-            url: "/?target=wind-speed-high-charts-gauge&dataOnly=1",
+            url: "/wx_windspeed.json",
             type: 'post',
             dataType: 'json',
             success: function(data) {
                 windspeedoptions.series = data;
+                console.log(data);
                 windspeedgraph = new Highcharts.Chart(windspeedoptions);
             },
             complete: function() {
